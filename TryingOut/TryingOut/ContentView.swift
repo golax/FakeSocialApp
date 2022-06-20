@@ -5,26 +5,29 @@
 //  Created by H on 6/14/22.
 //
 
+
+// the "frontend" of the app
 import SwiftUI
 
 struct UsersView: View {
     @StateObject var userData = UserData()
     
+    
     var body: some View {
         NavigationView {
-            VStack {
-                Text("Raw JSON Data:")
-                ScrollView {
-                    Text(userData.users)
+            
+            List(userData.users) { user in
+                HStack {AsyncImage(url: URL(string: user.picture.thumbnail)) { image in image.clipShape(Circle()) }
+                placeholder: { Image(systemName: "person").frame(width: 50, height: 50, alignment: .center) }
+                Text(user.fullName)
                 }
-            }
-            .padding()
-            .navigationTitle("Random Users")
+                }
+            
+        .navigationTitle("Random Users")
         }
     }
+    
 }
-
-
 
 struct UsersView_Previews: PreviewProvider {
     static var previews: some View {
