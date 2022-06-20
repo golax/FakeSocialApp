@@ -10,19 +10,17 @@ import Foundation
 @MainActor
 class UserData: ObservableObject {
     
-    @Published var users: String = "" // Initiates 
+    @Published var users: [User] = [] // Initiates an empty array
     
-    init() {
-        Task { await loadUsers() }
-    }
+    init() {  Task { await loadUsers() }  }
     
     func loadUsers() async {
         do {
             let users = try await UserFetchingClient.getUsers()
-            self.users = users
+            self.users = users 
             }
+        
         catch { print(error) }
     }
-    
     
 }
